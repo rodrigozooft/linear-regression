@@ -66,3 +66,17 @@ explanatory_data %>%
 
 # Compare to the results from predict()
 predict(mdl_price_vs_conv, explanatory_data)
+
+# Using sp500_yearly_returns, plot return_2019 vs. return_2018
+sp500_yearly_returns %>%
+  ggplot(aes(x = return_2018,y = return_2019)) +
+  # Make it a scatter plot
+  geom_point() +
+  # Add a line at y = x, colored green, size 1
+  geom_abline(color = "green", size = 1) +
+  # Add a linear regression trend line, no std. error ribbon
+  geom_smooth(method = "lm", se = FALSE) +
+  # Fix the coordinate ratio
+  coord_fixed()
+
+
