@@ -41,3 +41,28 @@ prediction_data <- explanatory_data %>%
 
 # See the result
 prediction_data
+
+# Add to the plot
+ggplot(taiwan_real_estate, aes(n_convenience, price_twd_msq)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  # Add a point layer of prediction data, colored yellow
+  geom_point(data = prediction_data, color = "yellow")
+
+  # Get the coefficients of mdl_price_vs_conv
+coeffs <- coefficients(mdl_price_vs_conv)
+
+# Get the intercept
+intercept <- coeffs[1]
+
+# Get the slope
+slope <- coeffs[2]
+
+explanatory_data %>% 
+  mutate(
+    # Manually calculate the predictions
+    price_twd_msq = intercept + slope * n_convenience
+  )
+
+# Compare to the results from predict()
+predict(mdl_price_vs_conv, explanatory_data)
