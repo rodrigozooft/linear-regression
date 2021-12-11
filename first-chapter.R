@@ -103,3 +103,14 @@ mdl_click_vs_impression_trans %>%
   glance() %>%
   pull(r.squared)
 
+# Get RSE for mdl_click_vs_impression_orig
+mdl_click_vs_impression_orig %>% 
+  # Get the model-level details
+  glance() %>% 
+  # Pull out sigma
+  pull(sigma)
+
+# Do the same for the transformed model
+mdl_click_vs_impression_trans %>%
+  glance() %>%
+  pull(sigma)
