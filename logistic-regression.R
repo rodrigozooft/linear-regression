@@ -20,4 +20,9 @@ ggplot(churn, aes(time_since_first_purchase, has_churned)) +
   # Add a glm trend line, no std error ribbon, binomial family
   geom_smooth(method = "glm", se = FALSE, method.args = list(family = binomial))
 
+# Fit a logistic regression of churn vs. 
+# length of relationship using the churn dataset
+mdl_churn_vs_relationship <- glm(has_churned ~ time_since_first_purchase, family = binomial, data = churn)
 
+# See the result
+mdl_churn_vs_relationship
