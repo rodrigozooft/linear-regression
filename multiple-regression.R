@@ -137,3 +137,26 @@ prediction_data_30_to_45 <- explanatory_data %>%
   mutate(
     predict(mdl_30_to_45, explanatory_data)
   )
+
+# Extend the plot to include prediction points
+ggplot(taiwan_real_estate, aes(n_convenience, price_twd_msq, color = house_age_years)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  # Add points using prediction_data_0_to_15, colored red, size 3, shape 15
+  geom_point(
+    data = prediction_data_0_to_15,
+    size = 3, 
+    shape = 15
+  ) +
+  # Add points using prediction_data_15_to_30, colored green, size 3, shape 15
+    geom_point(
+    data = prediction_data_15_to_30,
+    size = 3, 
+    shape = 15
+  ) +
+  # Add points using prediction_data_30_to_45, colored blue, size 3, shape 15
+    geom_point(
+    data = prediction_data_30_to_45,
+    size = 3, 
+    shape = 15
+  )
