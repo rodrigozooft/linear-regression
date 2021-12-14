@@ -26,3 +26,19 @@ mdl_churn_vs_relationship <- glm(has_churned ~ time_since_first_purchase, family
 
 # See the result
 mdl_churn_vs_relationship
+
+# From previous step
+prediction_data <- explanatory_data %>% 
+  mutate(   
+    has_churned = predict(mdl_churn_vs_relationship, explanatory_data, type = "response")
+  )
+
+# Update the plot
+plt_churn_vs_relationship +
+  # Add points from prediction_data, colored yellow, size 2
+  geom_point(
+    aes(y = has_churned),
+    data = prediction_data,
+    color = "yellow",
+    size = 2
+  )
