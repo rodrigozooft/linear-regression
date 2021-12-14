@@ -57,3 +57,19 @@ prediction_data <- explanatory_data %>%
 
 # See the results
 prediction_data
+
+mdl_price_vs_conv %>% 
+  # Get the model-level coefficients
+  glance() %>% 
+  # Select the coeffs of determination
+  select(r.squared, adj.r.squared)
+
+# Get the coeffs of determination for mdl_price_vs_age
+mdl_price_vs_age %>% 
+  glance() %>% 
+  select(r.squared, adj.r.squared)
+
+# Get the coeffs of determination for mdl_price_vs_both
+mdl_price_vs_both %>% 
+  glance() %>% 
+  select(r.squared, adj.r.squared)
