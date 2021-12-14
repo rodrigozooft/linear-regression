@@ -34,3 +34,26 @@ taiwan_real_estate %>%
     size = 5,
     shape = 15
   )
+
+# From previous step
+coeffs <- coefficients(mdl_price_vs_both)
+slope <- coeffs[1]
+intercept_0_15 <- coeffs[2]
+intercept_15_30 <- coeffs[3]
+intercept_30_45 <- coeffs[4]
+
+prediction_data <- explanatory_data %>% 
+  mutate(
+    # Consider the 3 cases to choose the intercept
+    intercept = case_when(
+      house_age_years == "0 to 15" ~ intercept_0_15,
+      house_age_years == "15 to 30" ~ intercept_15_30,
+      house_age_years == "30 to 45" ~ intercept_30_45
+    ),
+    
+    # Manually calculate the predictions
+    price_twd_msq = slope * n_convenience + intercept
+  )
+
+# See the results
+prediction_data
