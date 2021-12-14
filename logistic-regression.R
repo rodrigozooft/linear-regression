@@ -101,3 +101,12 @@ outcomes <- table(predicted_response, actual_response)
 
 # See the result
 outcomes
+
+# Convert outcomes to a yardstick confusion matrix
+confusion <- conf_mat(outcomes)
+
+# Plot the confusion matrix
+autoplot(confusion)
+
+# Get performance metrics for the confusion matrix
+summary(confusion, event_level = "second")
