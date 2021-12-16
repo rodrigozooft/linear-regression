@@ -56,3 +56,11 @@ auctions %>%
 # With taiwan_real_estate, draw a 3D scatter plot of
 # no. of conv. stores, sqrt dist to MRT, and price
 scatter3D(x = taiwan_real_estate$n_convenience, y = sqrt(taiwan_real_estate$dist_to_mrt_m), z = taiwan_real_estate$price_twd_msq)
+
+# Using taiwan_real_estate, plot sqrt dist to MRT vs. 
+# no. of conv stores, colored by price
+ggplot(taiwan_real_estate, aes(x = n_convenience, y = sqrt(dist_to_mrt_m), color = price_twd_msq)) + 
+  # Make it a scatter plot
+  geom_point() +
+  # Use the continuous viridis plasma color scale
+  scale_color_viridis_c(option = "plasma")
