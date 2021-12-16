@@ -121,3 +121,27 @@ mdl_price_vs_all_2_way_inter <- lm(price_twd_msq ~ (sqrt(dist_to_mrt_m) + n_conv
 
 # See the result
 mdl_price_vs_all_2_way_inter
+
+# From previous step
+explanatory_data <- expand_grid(
+  dist_to_mrt_m = seq(0, 80, 10) ^ 2,
+  n_convenience = 0:10,
+  house_age_years = unique(taiwan_real_estate$house_age_years)
+)
+prediction_data <- explanatory_data %>% 
+  mutate(price_twd_msq = predict(mdl_price_vs_all_3_way_inter, explanatory_data))
+
+# Extend the plot
+ggplot(
+  taiwan_real_estate, 
+  aes(sqrt(dist_to_mrt_m), n_convenience, color = price_twd_msq)
+) +
+  geom_point() +
+  scale_color_viridis_c(option = "plasma") +
+  facet_wrap(vars(house_age_years)) +
+  # Add points from prediction data, size 3, shape 15
+  geom_point(
+    data = prediction_data,
+    size = 3,
+    shape = 15
+  )
