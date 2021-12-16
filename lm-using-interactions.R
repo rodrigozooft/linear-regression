@@ -104,3 +104,12 @@ ggplot(
     color = "yellow",
     size = 3
   )
+# Using taiwan_real_estate, no. of conv. stores vs. sqrt of
+# dist. to MRT, colored by plot house price
+ggplot(taiwan_real_estate, aes(y = n_convenience, x = sqrt(dist_to_mrt_m), color = price_twd_msq)) +
+  # Make it a scatter plot
+  geom_point() +
+  # Use the continuous viridis plasma color scale
+  scale_color_viridis_c(optioin = "plasma") +
+  # Facet, wrapped by house age
+  facet_wrap(~ house_age_years)
