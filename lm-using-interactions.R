@@ -84,3 +84,23 @@ ggplot(
     color = "yellow",
     size = 3
   )
+
+# From previous steps
+mdl_price_vs_conv_dist <- lm(price_twd_msq ~ n_convenience * sqrt(dist_to_mrt_m), data = taiwan_real_estate)
+explanatory_data <- expand_grid(n_convenience = 0:10, dist_to_mrt_m = seq(0, 80, 10) ^ 2)
+prediction_data <- explanatory_data %>% 
+  mutate(price_twd_msq = predict(mdl_price_vs_conv_dist, explanatory_data))
+
+# Add predictions to plot
+ggplot(
+  taiwan_real_estate, 
+  aes(n_convenience, sqrt(dist_to_mrt_m), color = price_twd_msq)
+) + 
+  geom_point() +
+  scale_color_viridis_c(option = "plasma") +
+  # Add prediction points colored yellow, size 3
+  geom_point(
+    data = prediction_data,
+    color = "yellow",
+    size = 3
+  )
