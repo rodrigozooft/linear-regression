@@ -145,3 +145,20 @@ ggplot(
     size = 3,
     shape = 15
   )
+
+  calc_sum_of_squares <- function(coeffs) {
+  # Get the intercept coeff
+  intercept <- coeffs[1]
+
+  # Get the slope coeff
+  slope <- coeffs[2]
+
+  # Calculate the predicted y values
+  y_pred <- intercept + slope * x_actual
+
+  # Calculate the differences between actual and predicted
+  y_diff <- y_actual - y_pred
+
+  # Calculate the sum of squares
+  sum(y_diff ^ 2)
+}
