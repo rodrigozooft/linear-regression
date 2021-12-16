@@ -46,3 +46,10 @@ prediction_data <- explanatory_data %>%
 # See the result
 prediction_data
 
+# Using auctions, plot price vs. opening bid colored by
+# auction type as a scatter plot with linear regr'n trend lines
+auctions %>%
+    ggplot(aes(x = openbid, y = price, color = auction_type)) + 
+    geom_point() + 
+    geom_smooth(method = "lm", se = FALSE)
+
