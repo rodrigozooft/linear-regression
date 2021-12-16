@@ -113,3 +113,11 @@ ggplot(taiwan_real_estate, aes(y = n_convenience, x = sqrt(dist_to_mrt_m), color
   scale_color_viridis_c(optioin = "plasma") +
   # Facet, wrapped by house age
   facet_wrap(~ house_age_years)
+
+# Model price vs. sqrt dist. to MRT station, no. of conv.
+# stores & house age, no global intercept, 2-way interactions
+mdl_price_vs_all_2_way_inter <- lm(price_twd_msq ~ (sqrt(dist_to_mrt_m) + n_convenience + house_age_years) ^ 2 + 0, data = taiwan_real_estate)
+
+
+# See the result
+mdl_price_vs_all_2_way_inter
