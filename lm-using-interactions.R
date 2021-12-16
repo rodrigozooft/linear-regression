@@ -53,3 +53,6 @@ auctions %>%
     geom_point() + 
     geom_smooth(method = "lm", se = FALSE)
 
+# With taiwan_real_estate, draw a 3D scatter plot of
+# no. of conv. stores, sqrt dist to MRT, and price
+scatter3D(x = taiwan_real_estate$n_convenience, y = sqrt(taiwan_real_estate$dist_to_mrt_m), z = taiwan_real_estate$price_twd_msq)
