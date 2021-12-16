@@ -162,3 +162,23 @@ ggplot(
   # Calculate the sum of squares
   sum(y_diff ^ 2)
 }
+
+# From previous step
+calc_sum_of_squares <- function(coeffs) {
+  intercept <- coeffs[1]
+  slope <- coeffs[2]
+  y_pred <- intercept + slope * x_actual
+  y_diff <- y_actual - y_pred
+  sum(y_diff ^ 2)
+}
+
+# Optimize the metric
+optim(
+  # Initially guess 0 intercept and 0 slope
+  par = c(intercept = 0, slope = 0), 
+  # Use calc_sum_of_squares as the optimization fn
+  fn = calc_sum_of_squares
+)
+
+# Compare the coefficients to those calculated by lm()
+lm(price_twd_msq ~ n_convenience, data = taiwan_real_estate)
