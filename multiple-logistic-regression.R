@@ -24,3 +24,15 @@ autoplot(confusion)
 
 # Get summary metrics
 summary(confusion, event_level = "second")
+
+# From previous step
+logistic_distn_cdf <- tibble(
+  x = seq(-10, 10, 0.1),
+  logistic_x = plogis(x),
+  logistic_x_man = 1 / (1 + exp(-x))
+)
+
+# Using logistic_distn_cdf, plot logistic_x vs. x
+ggplot(logistic_distn_cdf, aes(y = logistic_x, x = x)) +
+  # Make it a line plot
+  geom_line()
