@@ -36,3 +36,15 @@ logistic_distn_cdf <- tibble(
 ggplot(logistic_distn_cdf, aes(y = logistic_x, x = x)) +
   # Make it a line plot
   geom_line()
+
+# From previous step
+logistic_distn_inv_cdf <- tibble(
+  p = seq(0.001, 0.999, 0.001),
+  logit_p = qlogis(p),
+  logit_p_man = log(p / (1 - p))
+)
+
+# Using logistic_distn_inv_cdf, plot logit_p vs. p
+ggplot(logistic_distn_inv_cdf, aes(y = logit_p, x = p)) +
+  # Make it a line plot
+  geom_line()
