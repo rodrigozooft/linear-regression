@@ -67,3 +67,15 @@ predict(locmodel, weekday_afternoon)
 
 # Predict Brett's location on a weekday evening
 predict(locmodel, weekday_evening)
+
+# The 'naivebayes' package is loaded into the workspace already
+# The Naive Bayes location model (locmodel) has already been built
+
+# Observe the predicted probabilities for a weekend afternoon
+predict(locmodel, weekend_afternoon, type = "prob")
+
+# Build a new model using the Laplace correction
+locmodel2 <- naive_bayes(formula = location ~ hourtype + daytype, laplace = 1, data = locations)
+
+# Observe the new predicted probabilities for a weekend afternoon
+predict(locmodel2, weekend_afternoon, type = "prob")
