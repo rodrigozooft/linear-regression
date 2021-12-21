@@ -56,3 +56,14 @@ predict(locmodel, thursday9am , type = "prob")
 
 # Obtain the predicted probabilities for Saturday at 9am
 predict(locmodel, saturday9am , type = "prob")
+
+# The 'naivebayes' package is loaded into the workspace already
+
+# Build a NB model of location
+locmodel <- naive_bayes(location ~ daytype + hourtype, data = locations)
+
+# Predict Brett's location on a weekday afternoon
+predict(locmodel, weekday_afternoon)
+
+# Predict Brett's location on a weekday evening
+predict(locmodel, weekday_evening)
