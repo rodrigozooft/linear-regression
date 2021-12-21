@@ -44,3 +44,15 @@ predict(locmodel, thursday9am)
 
 # Predict Saturdays's 9am location
 predict(locmodel, saturday9am)
+
+# The 'naivebayes' package is loaded into the workspace
+# and the Naive Bayes 'locmodel' has been built
+
+# Examine the location prediction model
+locmodel
+
+# Obtain the predicted probabilities for Thursday at 9am
+predict(locmodel, thursday9am , type = "prob")
+
+# Obtain the predicted probabilities for Saturday at 9am
+predict(locmodel, saturday9am , type = "prob")
