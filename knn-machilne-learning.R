@@ -79,3 +79,16 @@ locmodel2 <- naive_bayes(formula = location ~ hourtype + daytype, laplace = 1, d
 
 # Observe the new predicted probabilities for a weekend afternoon
 predict(locmodel2, weekend_afternoon, type = "prob")
+
+# Examine the dataset to identify potential independent variables
+str(donors)
+
+# Explore the dependent variable
+table(donors$donated)
+
+# Build the donation model
+donation_model <- glm(formula = donated ~ bad_address + interest_religion + interest_veterans, 
+                      data = donors, family = "binomial")
+
+# Summarize the model results
+summary(donation_model)
