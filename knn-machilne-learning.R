@@ -32,3 +32,15 @@ head(sign_pred)
 
 # Examine the proportion of votes for the winning class
 head(sign_prob)
+
+# Load the naivebayes package
+library(naivebayes)
+
+# Build the location prediction model
+locmodel <- naive_bayes(location ~ daytype, data = where9am)
+
+# Predict Thursday's 9am location
+predict(locmodel, thursday9am)
+
+# Predict Saturdays's 9am location
+predict(locmodel, saturday9am)
