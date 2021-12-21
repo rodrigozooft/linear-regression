@@ -92,3 +92,15 @@ donation_model <- glm(formula = donated ~ bad_address + interest_religion + inte
 
 # Summarize the model results
 summary(donation_model)
+
+# Load the pROC package
+library(pROC)
+
+# Create a ROC curve
+ROC <- roc(donors$donated, donors$donation_prob)
+
+# Plot the ROC curve
+plot(ROC, col = "blue")
+
+# Calculate the area under the curve (AUC)
+auc(ROC)
