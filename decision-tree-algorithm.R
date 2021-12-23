@@ -52,3 +52,16 @@ loan_model <- rpart(outcome ~ ., data = loans_train, method = "class", control =
 # Run this. How does the accuracy change?
 loans_test$pred <- predict(loan_model, loans_test, type = "class")
 mean(loans_test$pred == loans_test$outcome)
+
+# Grow an overly complex tree
+loan_model <- rpart(formula = outcome ~ ., data = loans_train, control = rpart.control(cp = 0), method = "class")
+
+# Examine the complexity plot
+plotcp(loan_model)
+
+# Prune the tree
+loan_model_pruned <- prune(loan_model, cp = 0.0014)
+
+# Compute the accuracy of the pruned tree
+loans_test$pred <- predict(loan_model_pruned, loans_test, type = "class")
+mean(loans_test$pred == loans_test$outcome)
