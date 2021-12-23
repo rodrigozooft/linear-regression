@@ -21,3 +21,15 @@ rpart.plot(loan_model)
 
 # Plot the loan_model with customized settings
 rpart.plot(loan_model, type = 3, box.palette = c("red", "green"), fallen.leaves = TRUE)
+
+# Determine the number of rows for training
+nrow(loans)
+
+# Create a random sample of row IDs
+sample_rows <- sample(11312, 8484)
+
+# Create the training dataset
+loans_train <- loans[sample_rows, ]
+
+# Create the test dataset
+loans_test <- loans[-sample_rows, ]
