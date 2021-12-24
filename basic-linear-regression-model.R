@@ -25,3 +25,25 @@ glance(unemployment_model)
 
 # Call wrapFTest() on unemployment_model to see the most relevant details
 wrapFTest(unemployment_model)
+
+# unemployment is in your workspace
+summary(unemployment)
+
+# newrates is in your workspace
+newrates
+
+# Predict female unemployment in the unemployment data set
+unemployment$prediction <-  predict(unemployment_model, unemployment)
+
+# load the ggplot2 package
+library(ggplot2)
+
+# Make a plot to compare predictions to actual (prediction on x axis). 
+ggplot(unemployment, aes(x = prediction, y = female_unemployment)) + 
+  geom_point() +
+  geom_abline(color = "blue")
+
+# Predict female unemployment rate when male unemployment is 5%
+pred <- predict(unemployment_model, newrates)
+# Print it
+pred
