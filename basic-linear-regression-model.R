@@ -47,3 +47,17 @@ ggplot(unemployment, aes(x = prediction, y = female_unemployment)) +
 pred <- predict(unemployment_model, newrates)
 # Print it
 pred
+
+# bloodpressure is in the workspace
+summary(bloodpressure)
+
+# Create the formula and print it
+fmla <- blood_pressure ~ age + weight
+fmla
+
+# Fit the model: bloodpressure_model
+bloodpressure_model <- lm(formula = fmla, data = bloodpressure)
+
+# Print bloodpressure_model and call summary() 
+bloodpressure_model
+summary(bloodpressure_model)
