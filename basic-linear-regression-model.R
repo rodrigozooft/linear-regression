@@ -147,3 +147,25 @@ summary(unemployment_model)
 
 # Get R-squared from glance and print it
 (rsq_glance <- glance(unemployment_model)$r.squared)
+
+# mpg is in the workspace
+summary(mpg)
+dim(mpg)
+
+# Use nrow to get the number of rows in mpg (N) and print it
+(N <- nrow(mpg))
+
+# Calculate how many rows 75% of N should be and print it
+# Hint: use round() to get an integer
+(target <- round(0.75 * N))
+
+# Create the vector of N uniform random variables: gp
+gp <- runif(N)
+
+# Use gp to create the training set: mpg_train (75% of data) and mpg_test (25% of data)
+mpg_train <- mpg[gp < 0.75, ]
+mpg_test <- mpg[gp >=  0.75, ]
+
+# Use nrow() to examine mpg_train and mpg_test
+nrow(mpg_train)
+nrow(mpg_test)
