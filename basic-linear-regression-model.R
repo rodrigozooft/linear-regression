@@ -87,3 +87,15 @@ ggplot(unemployment, aes(x = predictions, y = residuals)) +
   geom_pointrange(aes(ymin = 0, ymax = residuals)) + 
   geom_hline(yintercept = 0, linetype = 3) + 
   ggtitle("residuals vs. linear model prediction")
+
+# unemployment is in the workspace (with predictions)
+summary(unemployment)
+
+# unemployment_model is in the workspace
+summary(unemployment_model)
+
+# Load the package WVPlots
+library(WVPlots)
+
+# Plot the Gain Curve
+GainCurvePlot(unemployment, "predictions", "female_unemployment", "Unemployment model")
