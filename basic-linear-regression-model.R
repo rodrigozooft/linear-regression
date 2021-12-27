@@ -204,3 +204,18 @@ mpg_test$pred <- predict(mpg_model, mpg_test)
 ggplot(mpg_test, aes(x = pred, y = cty)) + 
   geom_point() + 
   geom_abline()
+
+# Load the package vtreat
+library(vtreat)
+
+# mpg is in the workspace
+summary(mpg)
+
+# Get the number of rows in mpg
+nRows <- nrow(mpg)
+
+# Implement the 3-fold cross-fold plan with vtreat
+splitPlan <- kWayCrossValidation(nRows, 3, dframe = NULL, y = NULL)
+
+# Examine the split plan
+str(splitPlan)
