@@ -169,3 +169,15 @@ mpg_test <- mpg[gp >=  0.75, ]
 # Use nrow() to examine mpg_train and mpg_test
 nrow(mpg_train)
 nrow(mpg_test)
+
+# mpg_train is in the workspace
+summary(mpg_train)
+
+# Create a formula to express cty as a function of hwy: fmla and print it.
+(fmla <- cty ~ hwy)
+
+# Now use lm() to build a model mpg_model from mpg_train that predicts cty from hwy 
+mpg_model <- lm(fmla, mpg_train)
+
+# Use summary() to examine the model
+summary(mpg_model)
