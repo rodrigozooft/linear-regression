@@ -132,3 +132,18 @@ summary(unemployment_model)
 
 # Get R-squared from glance. Print it
 (rsq_glance <- glance(unemployment_model)$r.squared)
+
+# unemployment is in your workspace
+summary(unemployment)
+
+# unemployment_model is in the workspace
+summary(unemployment_model)
+
+# Get the correlation between the prediction and true outcome: rho and print it
+(rho <- cor(unemployment$predictions, unemployment$female_unemployment))
+
+# Square rho: rho2 and print it
+(rho2 <- rho ^ 2)
+
+# Get R-squared from glance and print it
+(rsq_glance <- glance(unemployment_model)$r.squared)
