@@ -181,3 +181,26 @@ mpg_model <- lm(fmla, mpg_train)
 
 # Use summary() to examine the model
 summary(mpg_model)
+
+# Examine the objects in the workspace
+ls.str()
+
+# predict cty from hwy for the training set
+mpg_train$pred <- predict(mpg_model, mpg_train)
+
+# predict cty from hwy for the test set
+mpg_test$pred <- predict(mpg_model, mpg_test)
+
+# Evaluate the rmse on both training and test data and print them
+(rmse_train <- rmse(mpg_train$pred, mpg_train$cty))
+(rmse_test <- rmse(mpg_test$pred, mpg_test$cty))
+
+
+# Evaluate the r-squared on both training and test data.and print them
+(rsq_train <- r_squared(mpg_train$pred, mpg_train$cty))
+(rsq_test <- r_squared(mpg_test$pred, mpg_test$cty))
+
+# Plot the predictions (on the x-axis) against the outcome (cty) on the test data
+ggplot(mpg_test, aes(x = pred, y = cty)) + 
+  geom_point() + 
+  geom_abline()
