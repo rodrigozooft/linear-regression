@@ -142,3 +142,26 @@ summary(income_test$pred.income)
 ggplot(income_test, aes(x = pred.income, y = Income2005)) + 
   geom_point() + 
   geom_abline(color = "blue")
+
+  # fmla.abs is in the workspace
+fmla.abs
+
+# model.abs is in the workspace
+summary(model.abs)
+
+# Add predictions to the test set
+income_test <- income_test %>%
+  mutate(pred.absmodel = predict(model.abs, income_test),        # predictions from model.abs
+         pred.logmodel = exp(predict(model.log, income_test)))   # predictions from model.log
+
+# Gather the predictions and calculate residuals and relative error
+income_long <- income_test %>% 
+  gather(key = modeltype, value = pred, pred.absmodel, pred.logmodel) %>%
+  mutate(residual = pred - Income2005,   # residuals
+         relerr   = residual / Income2005)   # relative error
+
+# Calculate RMSE and relative RMSE and compare
+income_long %>% 
+  group_by(modeltype) %>%      # group by modeltype
+  summarize(rmse     = sqrt(mean(residual ^ 2)),    # RMSE
+            rmse.rel = sqrt(mean(relerr ^ 2)))    # Root mean squared relative error
