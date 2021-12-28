@@ -38,3 +38,22 @@ flowers$predictions <- predict(flower_model, flowers)
 ggplot(flowers, aes(x = predictions, y = Flowers)) + 
   geom_point() +
   geom_abline(color = "blue") 
+
+# alcohol is in the workspace
+summary(alcohol)
+
+# Create the formula with main effects only
+(fmla_add <- as.formula("Metabol ~ Gastric + Sex") )
+
+# Create the formula with interactions
+(fmla_interaction <- as.formula("Metabol ~ Gastric + Gastric:Sex") )
+
+# Fit the main effects only model
+model_add <- lm(fmla_add, alcohol)
+
+# Fit the interaction model
+model_interaction <- lm(fmla_interaction, alcohol)
+
+# Call summary on both models and compare
+summary(model_add)
+summary(model_interaction)
