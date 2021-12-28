@@ -91,3 +91,32 @@ alcohol %>%
   mutate(residuals = Metabol - pred) %>%      
   group_by(modeltype) %>%
   summarize(rmse = sqrt(mean(residuals ^ 2)))
+
+# fdata is in the workspace
+summary(fdata)
+
+# Examine the data: generate the summaries for the groups large and small:
+fdata %>% 
+    group_by(label) %>%     # group by small/large purchases
+    summarize(min  = min(y),   # min of y
+              mean = mean(y),   # mean of y
+              max  = max(y))   # max of y
+
+# Fill in the blanks to add error columns
+fdata2 <- fdata %>% 
+         group_by(label) %>%       # group by label
+           mutate(residual = y - pred,  # Residual
+                  relerr   = residual / y)  # Relative error
+
+# Compare the rmse and rmse.rel of the large and small groups:
+fdata2 %>% 
+  group_by(label) %>% 
+  summarize(rmse = sqrt(mean(residual ^ 2)),   # RMSE
+            rmse.rel = sqrt(mean(relerr ^ 2)))   # Root mean squared relative error
+            
+# Plot the predictions for both groups of purchases
+ggplot(fdata2, aes(x = pred, y = y, color = label)) + 
+  geom_point() + 
+  geom_abline() + 
+  facet_wrap(~ label, ncol = 1, scales = "free") + 
+  ggtitle("Outcome vs prediction")
