@@ -165,3 +165,26 @@ income_long %>%
   group_by(modeltype) %>%      # group by modeltype
   summarize(rmse     = sqrt(mean(residual ^ 2)),    # RMSE
             rmse.rel = sqrt(mean(relerr ^ 2)))    # Root mean squared relative error
+
+# houseprice is in the workspace
+summary(houseprice)
+
+# Create the formula for price as a function of squared size
+(fmla_sqr <- as.formula("price ~ I(size ^ 2)"))
+
+# Fit a model of price as a function of squared size (use fmla_sqr)
+model_sqr <- lm(fmla_sqr, houseprice)
+
+# Fit a model of price as a linear function of size
+model_lin <- lm(price ~ size, houseprice)
+
+# Make predictions and compare
+houseprice %>% 
+    mutate(pred_lin = predict(model_lin, houseprice),       # predictions from linear model
+           pred_sqr = predict(model_sqr, houseprice)) %>%   # predictions from quadratic model 
+    gather(key = modeltype, value = pred, pred_lin, pred_sqr) %>% # gather the predictions
+    ggplot(aes(x = size)) + 
+       geom_point(aes(y = price)) +                   # actual prices
+       geom_line(aes(y = pred, color = modeltype)) + # the predictions
+       scale_color_brewer(palette = "Dark2")
+
