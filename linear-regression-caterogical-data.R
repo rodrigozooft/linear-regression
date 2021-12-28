@@ -120,3 +120,25 @@ ggplot(fdata2, aes(x = pred, y = y, color = label)) +
   geom_abline() + 
   facet_wrap(~ label, ncol = 1, scales = "free") + 
   ggtitle("Outcome vs prediction")
+
+  # Examine Income2005 in the training set
+summary(income_train$Income2005)
+
+# Write the formula for log income as a function of the tests and print it
+(fmla.log <- as.formula("log(Income2005) ~ Arith + Word + Parag + Math + AFQT"))
+
+# Fit the linear model
+model.log <-  lm(fmla.log, income_train)
+
+# Make predictions on income_test
+income_test$logpred <- predict(model.log, income_test)
+summary(income_test$logpred)
+
+# Convert the predictions to monetary units
+income_test$pred.income <- exp(income_test$logpred)
+summary(income_test$pred.income)
+
+#  Plot predicted income (x axis) vs income
+ggplot(income_test, aes(x = pred.income, y = Income2005)) + 
+  geom_point() + 
+  geom_abline(color = "blue")
