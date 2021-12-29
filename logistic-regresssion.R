@@ -55,3 +55,22 @@ bike_model <- glm(fmla, data = bikesJuly, family = quasipoisson)
 
 # Calculate pseudo-R-squared
 (pseudoR2 <- 1 - perf$deviance/perf$null.deviance)
+
+# bikesAugust is in the workspace
+str(bikesAugust)
+
+# bike_model is in the workspace
+summary(bike_model)
+
+# Make predictions on August data
+bikesAugust$pred  <- predict(bike_model, type = "response", newdata = bikesAugust)
+
+# Calculate the RMSE
+bikesAugust %>% 
+  mutate(residual = pred - cnt) %>%
+  summarize(rmse  = sqrt(mean(residual ^ 2)))
+
+# Plot predictions vs cnt (pred on x-axis)
+ggplot(bikesAugust, aes(x = pred, y = cnt)) +
+  geom_point() + 
+  geom_abline(color = "darkblue")
