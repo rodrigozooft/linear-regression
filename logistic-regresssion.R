@@ -30,3 +30,28 @@ sparrow$pred <- predict(sparrow_model, data = sparrow, type = "response")
 
 # Look at gain curve
 GainCurvePlot(sparrow, xvar = "pred", truthVar = "survived", "sparrow survival model")
+
+# bikesJuly is in the workspace
+str(bikesJuly)
+
+# The outcome column
+outcome 
+
+# The inputs to use
+vars 
+
+# Create the formula string for bikes rented as a function of the inputs
+(fmla <- paste(outcome, "~", paste(vars, collapse = " + ")))
+
+# Calculate the mean and variance of the outcome
+(mean_bikes <- mean(bikesJuly$cnt))
+(var_bikes <- var(bikesJuly$cnt))
+
+# Fit the model
+bike_model <- glm(fmla, data = bikesJuly, family = quasipoisson)
+
+# Call glance
+(perf <- glance(bike_model))
+
+# Calculate pseudo-R-squared
+(pseudoR2 <- 1 - perf$deviance/perf$null.deviance)
