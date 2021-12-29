@@ -18,3 +18,15 @@ summary(sparrow_model)
 
 # Calculate pseudo-R-squared
 (pseudoR2 <- 1 - perf$deviance / perf$null.deviance)
+
+# sparrow is in the workspace
+summary(sparrow)
+
+# sparrow_model is in the workspace
+summary(sparrow_model)
+
+# Make predictions
+sparrow$pred <- predict(sparrow_model, data = sparrow, type = "response")
+
+# Look at gain curve
+GainCurvePlot(sparrow, xvar = "pred", truthVar = "survived", "sparrow survival model")
