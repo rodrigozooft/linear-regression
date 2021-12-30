@@ -339,3 +339,28 @@ ggplot(first_two_weeks, aes(x = instant, y = value, color = valuetype, linetype 
   scale_x_continuous("Day", breaks = 0:14, labels = 0:14) + 
   scale_color_brewer(palette = "Dark2") + 
   ggtitle("Predicted August bike rentals, Random Forest plot")
+
+# dframe is in the workspace
+dframe
+
+# Create and print a vector of variable names
+(vars <- c("color", "size"))
+
+# Load the package vtreat
+library(vtreat)
+
+# Create the treatment plan
+treatplan <- designTreatmentsZ(dframe, vars)
+
+# Examine the scoreFrame
+(scoreFrame <- treatplan %>%
+    use_series(scoreFrame) %>%
+    select(varName, origName, code))
+
+# We only want the rows with codes "clean" or "lev"
+(newvars <- scoreFrame %>%
+    filter(code %in% c("clean", "lev")) %>%
+    use_series(varName))
+
+# Create the treated training data
+(dframe.treat <- prepare(treatplan, dframe, varRestriction = newvars))
