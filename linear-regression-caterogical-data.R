@@ -364,3 +364,16 @@ treatplan <- designTreatmentsZ(dframe, vars)
 
 # Create the treated training data
 (dframe.treat <- prepare(treatplan, dframe, varRestriction = newvars))
+
+# treatplan is in the workspace
+summary(treatplan)
+
+# newvars is in the workspace
+newvars
+
+# Print dframe and testframe
+dframe
+testframe
+
+# Use prepare() to one-hot-encode testframe
+(testframe.treat <- prepare(treatplan, testframe, varRestriction = newvars))
