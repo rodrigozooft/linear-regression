@@ -238,3 +238,17 @@ bikesAugust %>%
   scale_x_continuous("Day", breaks = 0:14, labels = 0:14) + 
   scale_color_brewer(palette = "Dark2") + 
   ggtitle("Predicted August bike rentals, Quasipoisson model")
+
+  # From previous step
+library(mgcv)
+fmla.gam <- weight ~ s(Time)
+model.gam <- gam(fmla.gam, data = soybean_train, family = gaussian)
+
+# Call summary() on model.lin and look for R-squared
+summary(model.lin)
+
+# Call summary() on model.gam and look for R-squared
+summary(model.gam)
+
+# Call plot() on model.gam
+plot(model.gam)
