@@ -223,3 +223,18 @@ houseprice_long <- houseprice %>%
 houseprice_long %>% 
   group_by(modeltype) %>% # group by modeltype
   summarize(rmse = sqrt(mean(residuals ^ 2)))
+
+# Plot predictions and cnt by date/time
+bikesAugust %>% 
+  # set start to 0, convert unit to days
+  mutate(instant = (instant - min(instant))/24) %>%  
+  # gather cnt and pred into a value column
+  gather(key = valuetype, value = value, cnt, pred) %>%
+  filter(instant < 14) %>% # restrict to first 14 days
+  # plot value by instant
+  ggplot(aes(x = instant, y = value, color = valuetype, linetype = valuetype)) + 
+  geom_point() + 
+  geom_line() + 
+  scale_x_continuous("Day", breaks = 0:14, labels = 0:14) + 
+  scale_color_brewer(palette = "Dark2") + 
+  ggtitle("Predicted August bike rentals, Quasipoisson model")
