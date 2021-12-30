@@ -323,3 +323,19 @@ bikesAugust %>%
 ggplot(bikesAugust, aes(x = pred, y = cnt)) + 
   geom_point() + 
   geom_abline()
+
+first_two_weeks <- bikesAugust %>% 
+  # Set start to 0, convert unit to days
+  mutate(instant = (instant - min(instant)) / 24) %>% 
+  # Gather cnt and pred into a column named value with key valuetype
+  gather(key = valuetype, value = value, cnt, pred) %>%
+  # Filter for rows in the first two
+  filter(instant < 14) 
+
+# Plot predictions and cnt by date/time 
+ggplot(first_two_weeks, aes(x = instant, y = value, color = valuetype, linetype = valuetype)) + 
+  geom_point() + 
+  geom_line() + 
+  scale_x_continuous("Day", breaks = 0:14, labels = 0:14) + 
+  scale_color_brewer(palette = "Dark2") + 
+  ggtitle("Predicted August bike rentals, Random Forest plot")
