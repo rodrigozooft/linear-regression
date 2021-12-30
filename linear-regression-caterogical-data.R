@@ -279,3 +279,29 @@ soybean_long %>%
   geom_point(aes(y = pred, color = modeltype)) +   # the y-column for the point-and-line plot
   geom_line(aes(y = pred, color = modeltype, linetype = modeltype)) + # the y-column for the point-and-line plot
   scale_color_brewer(palette = "Dark2")
+
+# bikesJuly is in the workspace
+str(bikesJuly)
+
+# Random seed to reproduce results
+seed
+
+# The outcome column
+(outcome <- "cnt")
+
+# The input variables
+(vars <- c("hr", "holiday", "workingday", "weathersit", "temp", "atemp", "hum", "windspeed"))
+
+# Create the formula string for bikes rented as a function of the inputs
+(fmla <- paste(outcome, "~", paste(vars, collapse = " + ")))
+
+# Load the package ranger
+library(ranger)
+
+# Fit and print the random forest model
+(bike_model_rf <- ranger(fmla, # formula 
+                         bikesJuly, # data
+                         num.trees = 500, 
+                         respect.unordered.factors = "order", 
+                         seed = seed))
+
