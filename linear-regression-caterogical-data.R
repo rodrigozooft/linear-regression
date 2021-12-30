@@ -305,3 +305,21 @@ library(ranger)
                          respect.unordered.factors = "order", 
                          seed = seed))
 
+# bikesAugust is in the workspace
+str(bikesAugust)
+
+# bike_model_rf is in the workspace
+bike_model_rf
+
+# Make predictions on the August data
+bikesAugust$pred <- predict(bike_model_rf, bikesAugust)$predictions
+
+# Calculate the RMSE of the predictions
+bikesAugust %>% 
+  mutate(residual = cnt - pred)  %>% # calculate the residual
+  summarize(rmse  = sqrt(mean(residual ^ 2)))      # calculate rmse
+
+# Plot actual outcome vs predictions (predictions on x-axis)
+ggplot(bikesAugust, aes(x = pred, y = cnt)) + 
+  geom_point() + 
+  geom_abline()
