@@ -455,3 +455,29 @@ bikesAugust$pred <- predict(bike_model_xgb, as.matrix(bikesAugust.treat))
 ggplot(bikesAugust, aes(x = pred, y = cnt)) + 
   geom_point() + 
   geom_abline()
+
+# bikesAugust is in the workspace
+str(bikesAugust)
+
+# Calculate RMSE
+bikesAugust %>%
+  mutate(residuals = cnt - pred) %>%
+  summarize(rmse = sqrt(mean(residuals ^ 2)))
+
+# Print quasipoisson_plot
+quasipoisson_plot
+
+# Print randomforest_plot
+randomforest_plot
+
+# Plot predictions and actual bike rentals as a function of time (days)
+bikesAugust %>% 
+  mutate(instant = (instant - min(instant))/24) %>%  # set start to 0, convert unit to days
+  gather(key = valuetype, value = value, cnt, pred) %>%
+  filter(instant < 14) %>% # first two weeks
+  ggplot(aes(x = instant, y = value, color = valuetype, linetype = valuetype)) + 
+  geom_point() + 
+  geom_line() + 
+  scale_x_continuous("Day", breaks = 0:14, labels = 0:14) + 
+  scale_color_brewer(palette = "Dark2") + 
+  ggtitle("Predicted August bike rentals, Gradient Boosting model")
