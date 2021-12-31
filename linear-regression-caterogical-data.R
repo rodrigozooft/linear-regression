@@ -405,3 +405,29 @@ bikesAugust.treat <- prepare(treatplan, bikesAugust,  varRestriction = newvars)
 # Call str() on the treated data
 str(bikesJuly.treat)
 str(bikesAugust.treat)
+
+# The July data is in the workspace
+ls()
+
+# Load the package xgboost
+library(xgboost)
+
+# Run xgb.cv
+cv <- xgb.cv(data = as.matrix(bikesJuly.treat), 
+            label = bikesJuly$cnt,
+            nrounds = 100,
+            nfold = 5,
+            objective = "reg:linear",
+            eta = 0.3,
+            max_depth = 6,
+            early_stopping_rounds = 10,
+            verbose = 0    # silent
+)
+
+# Get the evaluation log 
+elog <- cv$evaluation_log
+
+# Determine and print how many trees minimize training and test error
+elog %>% 
+   summarize(ntrees.train = which.min(train_rmse_mean),   # find the index of min(train_rmse_mean)
+             ntrees.test  = which.min(test_rmse_mean))   # find the index of min(test_rmse_mean)
