@@ -431,3 +431,27 @@ elog <- cv$evaluation_log
 elog %>% 
    summarize(ntrees.train = which.min(train_rmse_mean),   # find the index of min(train_rmse_mean)
              ntrees.test  = which.min(test_rmse_mean))   # find the index of min(test_rmse_mean)
+
+# Examine the workspace
+ls()
+
+# The number of trees to use, as determined by xgb.cv
+ntrees
+
+# Run xgboost
+bike_model_xgb <- xgboost(data = as.matrix(bikesJuly.treat), # training data as matrix
+                   label = bikesJuly$cnt,  # column of outcomes
+                   nrounds = ntrees,       # number of trees to build
+                   objective = "reg:linear", # objective
+                   eta = 0.3,
+                   depth = 6,
+                   verbose = 0  # silent
+)
+
+# Make predictions
+bikesAugust$pred <- predict(bike_model_xgb, as.matrix(bikesAugust.treat))
+
+# Plot predictions (on x axis) vs actual bike rental count
+ggplot(bikesAugust, aes(x = pred, y = cnt)) + 
+  geom_point() + 
+  geom_abline()
