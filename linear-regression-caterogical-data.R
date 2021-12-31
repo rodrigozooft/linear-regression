@@ -377,3 +377,31 @@ testframe
 
 # Use prepare() to one-hot-encode testframe
 (testframe.treat <- prepare(treatplan, testframe, varRestriction = newvars))
+
+# The outcome column
+(outcome <- "cnt")
+
+# The input columns
+(vars <- c("hr", "holiday", "workingday", "weathersit", "temp", "atemp", "hum", "windspeed"))
+
+# Load the package vtreat
+library(vtreat)
+
+# Create the treatment plan from bikesJuly (the training data)
+treatplan <- designTreatmentsZ(bikesJuly,vars, verbose = FALSE)
+
+# Get the "clean" and "lev" variables from the scoreFrame
+(newvars <- treatplan %>%
+  use_series(scoreFrame) %>%        
+  filter(code %in% c("clean", "lev")) %>%  # get the rows you care about
+  use_series(varName))           # get the varName column
+
+# Prepare the training data
+bikesJuly.treat <- prepare(treatplan, bikesJuly,  varRestriction = newvars)
+
+# Prepare the test data
+bikesAugust.treat <- prepare(treatplan, bikesAugust,  varRestriction = newvars)
+
+# Call str() on the treated data
+str(bikesJuly.treat)
+str(bikesAugust.treat)
